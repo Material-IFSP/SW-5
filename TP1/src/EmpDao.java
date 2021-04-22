@@ -10,7 +10,7 @@ public class EmpDao {
 			 // Database name to access
 			 String dbName = "tp1";
 			 String dbUsername = "root";
-			 String dbPassword = "root";
+			 String dbPassword = "admin";
 
 			 Class.forName(dbDriver);
 			 con = DriverManager.getConnection(dbURL + dbName,
@@ -51,7 +51,7 @@ public class EmpDao {
 			ps.setString(2,e.getPassword());
 			ps.setString(3,e.getEmail());
 			ps.setString(4,e.getCountry());
-			ps.setInt(5,e.getId());
+			ps.setInt(5, e.getId());
 			status=ps.executeUpdate();
 			con.close();
 			}
@@ -76,31 +76,8 @@ public class EmpDao {
 			}
 			 return status;
 			}
-	
-			public static Emp getEmployeeById(int id){
-			Emp e=new Emp();
-			try{
-			Connection con=EmpDao.getConnection();
-			PreparedStatement ps=con.prepareStatement("select * from user905where id=?");
-			ps.setInt(1,id);
-			ResultSet rs=ps.executeQuery();
-			if(rs.next()){
-			e.setId(rs.getInt(1));
-			e.setName(rs.getString(2));
-			e.setPassword(rs.getString(3));
-			e.setEmail(rs.getString(4));
-			e.setCountry(rs.getString(5));
-			}
-			con.close();
-			}
-			catch(Exception ex)
-			{
-				ex.printStackTrace();
-			}
-		return e;
-		}
 			
-	public static List<Emp> getAllEmployees(){
+public static List<Emp> getAllEmployees(){
 		List<Emp> list=new ArrayList<Emp>();
 			try{
 			Connection con=EmpDao.getConnection();
@@ -122,4 +99,29 @@ public class EmpDao {
 			}
 		return list;
 		}
+
+
+public static Emp getEmployeeById(int id) {
+    Emp e = new Emp();
+
+    try {
+      Connection con = EmpDao.getConnection();
+      PreparedStatement ps = con.prepareStatement("select * from user905 where id=?");
+      ps.setInt(1, id);
+      ResultSet rs = ps.executeQuery();
+      if (rs.next()) {
+        e.setId(rs.getInt(1));
+        e.setName(rs.getString(2));
+        e.setPassword(rs.getString(3));
+        e.setEmail(rs.getString(4));
+        e.setCountry(rs.getString(5));
+      }
+      con.close();
+    } catch (Exception ex) {
+      ex.printStackTrace();
+    }
+
+    return e;
 }
+}
+
